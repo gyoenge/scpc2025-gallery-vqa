@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "scpc2025-gallery-vqa"
+version = "0.1.0"
+description = "Multimodal VQA for DACON 2025 Samsung Collegiate Programming Challenge"
+requires-python = ">=3.10"
+
+# NOTE: torch must be installed separately with the appropriate CUDA index URL.
+# See requirements.txt or README for the exact command.
+dependencies = [
+    "transformers==4.54.0",
+    "accelerate==1.9.0",
+    "peft==0.16.0",
+    "bitsandbytes==0.46.1",
+    "trl==0.19.1",
+    "datasets==4.0.0",
+    "diffusers==0.20.0",
+    "safetensors==0.5.3",
+    "einops==0.8.1",
+    "tiktoken==0.9.0",
+    "transformers-stream-generator==0.0.5",
+    "numpy==2.1.2",
+    "pandas==2.3.1",
+    "pillow==11.0.0",
+    "tqdm==4.67.1",
+]
+
+[project.optional-dependencies]
+jupyter = [
+    "ipykernel==6.30.0",
+    "jupyter_client==8.6.3",
+    "jupyter_core==5.8.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["configs*", "dataset*", "model*", "utils*"]
