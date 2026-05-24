@@ -21,6 +21,8 @@ def make_trainer(model, dataset: Dataset, cfg: Config, processor) -> CustomTrain
         logging_steps=cfg.logging_steps,
         save_steps=cfg.save_steps,
         learning_rate=cfg.learning_rate,
+        lr_scheduler_type=cfg.lr_scheduler_type,
+        warmup_ratio=cfg.warmup_ratio,
         save_total_limit=cfg.save_total_limit,
         fp16=True,
     )

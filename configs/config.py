@@ -50,6 +50,8 @@ class Config:
     logging_steps: int = 10
     save_steps: int = 200
     learning_rate: float = 5e-5
+    lr_scheduler_type: str = "cosine"
+    warmup_ratio: float = 0.1
     save_total_limit: int = 3
     input_max_length: int = 384
     target_max_length: int = 128

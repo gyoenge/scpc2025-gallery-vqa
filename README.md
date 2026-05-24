@@ -165,6 +165,8 @@ Key fields:
 |---|---|---|
 | `base_model_id` | `Salesforce/blip2-flan-t5-xl` | Base BLIP2 model |
 | `lora_r` / `lora_alpha` | 32 / 64 | LoRA rank and scaling |
+| `lr_scheduler_type` | `"cosine"` | LR scheduler (`"cosine"`, `"linear"`, etc.) |
+| `warmup_ratio` | 0.1 | Fraction of steps used for LR warmup |
 | `num_epochs` | 5 | Training epochs |
 | `batch_size` | 8 | Per-device batch size |
 | `input_max_length` | 384 | Tokenizer input truncation |

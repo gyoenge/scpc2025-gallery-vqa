@@ -76,6 +76,8 @@ Default hyperparameter:
 | Parameter | Value |
 |-----------|-------|
 | Learning rate | 5e-5 |
+| LR scheduler | cosine |
+| Warmup ratio | 0.1 |
 | Epochs | 5 |
 | Per-device batch size | 8 |
 | Gradient accumulation | 4 |

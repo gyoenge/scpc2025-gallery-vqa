@@ -66,6 +66,8 @@ cfg.num_epochs = 10   # field override
 | `gradient_accumulation_steps` | 4 | Effective batch = `batch_size × steps` = 32 |
 | `num_epochs` | 5 | 총 training epoch 수 |
 | `learning_rate` | 5e-5 | AdamW learning rate |
+| `lr_scheduler_type` | `"cosine"` | LR scheduler 종류 (`"cosine"`, `"linear"` 등) |
+| `warmup_ratio` | 0.1 | Warmup에 사용할 전체 step 비율 |
 | `logging_steps` | 10 | N optimizer step마다 log 출력 |
 | `save_steps` | 200 | N optimizer step마다 checkpoint 저장 |
 | `save_total_limit` | 3 | Disk에 유지할 최대 checkpoint 수 |
