@@ -38,8 +38,9 @@ cfg.num_epochs = 10   # override a field
 |-------|---------|-------------|
 | `num_prompt_generations` | 300 | Number of Qwen calls (≈5 scenes each → ~1,500 prompts) |
 | `categories` | 4 strings | Scene categories sampled randomly per Qwen call |
-| `use_real_data` | `False` | Mix COCO val2017 real images into training data |
-| `num_real_images` | 500 | Number of COCO images to download when `use_real_data=True` |
+| `use_real_data` | `True` | Mix COCO val2017 real images into training data |
+| `num_real_images` | 3000 | Number of COCO images to download when `use_real_data=True` |
+| `balance_answer_dist` | `False` | Undersample to equalize A/B/C/D counts before training |
 
 ## LoRA
 

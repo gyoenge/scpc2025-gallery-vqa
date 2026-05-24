@@ -5,6 +5,7 @@ from datasets import Dataset
 from transformers import Blip2Processor
 
 from configs.config import Config
+from dataset.validate import validate_qa
 
 
 def build_dataset(cfg: Config, processor: Blip2Processor) -> Dataset:
@@ -16,6 +17,8 @@ def build_dataset(cfg: Config, processor: Blip2Processor) -> Dataset:
         df_real = pd.read_csv(real_csv)
         df = pd.concat([df, df_real], ignore_index=True)
         print(f"Dataset: {len(df)} total ({len(df_real)} real + {len(df) - len(df_real)} synthetic)")
+
+    df = validate_qa(df, balance=cfg.balance_answer_dist)
     df["prompt"] = df.apply(_build_prompt, axis=1)
     df["target"] = df.apply(_build_target, axis=1)
 

@@ -117,6 +117,37 @@ Set `use_real_data = True` in `configs/config.py`. The pipeline:
 
 ---
 
+## QA quality validation (`dataset/validate.py`)
+
+`build_dataset` 호출 직전에 세 단계가 순서대로 실행됩니다.
+
+### Step 1 — Invalid answer filter
+
+`answer` 컬럼이 `A` / `B` / `C` / `D` 이외인 행을 제거합니다.  
+LLaVA 파싱 실패로 빈 값이나 `?`가 들어간 행이 해당됩니다.
+
+### Step 2 — Duplicate question filter
+
+`Question` 컬럼 기준으로 중복 행을 제거합니다 (첫 번째 행 유지).
+
+### Step 3 — Answer distribution report
+
+A/B/C/D 비율을 출력하고 한 클래스가 15% 미만이면 경고를 표시합니다.
+
+```
+Answer distribution — A: 1734 (25.0%) | B: 1721 (24.8%) | C: 1743 (25.1%) | D: 1738 (25.1%)
+```
+
+불균형이 심한 경우:
+
+```
+Answer distribution — A: 891 (12.8%) ⚠ | B: 2341 (33.7%) | ...
+```
+
+`balance_answer_dist = True`로 설정하면 클래스별 최솟값으로 undersample해 균형을 맞춥니다.
+
+---
+
 ## Dataset statistics
 
 | Metric | Value |

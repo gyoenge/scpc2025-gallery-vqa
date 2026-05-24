@@ -29,7 +29,14 @@ LoRA configuration:
 
 ### 2. Dataset preprocessing (`dataset/loader.py` → `build_dataset`)
 
-Each example in `question_answer.csv` is converted to a `(prompt, target)` pair:
+CSV 로드 및 병합 후 `dataset/validate.py:validate_qa` 가 실행됩니다:
+
+1. 유효하지 않은 정답 제거 (`A`/`B`/`C`/`D` 이외)
+2. 중복 질문 제거
+3. A/B/C/D 분포 출력 (15% 미만 클래스에 경고)
+4. `balance_answer_dist = True` 이면 undersample로 균형 조정
+
+그 뒤 각 예제를 `(prompt, target)` 쌍으로 변환합니다:
 
 **Prompt** (passed to BLIP2 with the image):
 ```

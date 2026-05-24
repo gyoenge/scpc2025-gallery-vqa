@@ -23,6 +23,7 @@ class Config:
     num_prompt_generations: int = 1000
     use_real_data: bool = True
     num_real_images: int = 3000
+    balance_answer_dist: bool = False
     categories: list = field(default_factory=lambda: [
         "- Nature (e.g. landscape, animal, weather, plants)\n",
         "- Travel (e.g. tourist spots, local streets, vehicles, airports)\n",
