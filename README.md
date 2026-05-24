@@ -8,7 +8,7 @@
 - **Result**: **18th / 1,445** on private leaderboard — score 0.8344 ([Leaderboard](https://dacon.io/competitions/official/236500/leaderboard))
 
 <p align="center">
-<img width="70%" alt="leaderboard" src="https://github.com/user-attachments/assets/41abe434-0ced-474d-b09c-80f39ad537ea" />
+<img width="70%" alt="leaderboard" src="scpcrank.png" />
 </p>
 
 <p align="center">
