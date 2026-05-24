@@ -1,6 +1,6 @@
 # Quickstart
 
-Three commands to go from a clean environment to a submission file.
+세 가지 명령어로 clean environment에서 submission file까지 완성한다.
 
 ## 1. Generate the training dataset
 
@@ -8,13 +8,13 @@ Three commands to go from a clean environment to a submission file.
 python generate_dataset.py
 ```
 
-Runs three steps sequentially. Each step is skipped if its output file already exists:
+세 단계를 순서대로 실행한다. 각 단계는 output file이 이미 존재하면 건너뛴다:
 
-- **Step 1** — generate scene prompts → `data/generated/scene_prompt.csv`
-- **Step 2** — render images → `data/generated/images/scene_*.jpg`
-- **Step 3** — annotate with VQA pairs → `data/generated/question_answer.csv`
+- **Step 1** — scene prompt 생성 → `data/generated/scene_prompt.csv`
+- **Step 2** — 이미지 렌더링 → `data/generated/images/scene_*.jpg`
+- **Step 3** — VQA pair annotation → `data/generated/question_answer.csv`
 
-Expected runtime on an A100: ~3 hours total (image synthesis is the bottleneck).
+A100 기준 예상 소요 시간: 총 ~3시간 (image synthesis가 bottleneck).
 
 ## 2. Fine-tune
 
@@ -22,9 +22,9 @@ Expected runtime on an A100: ~3 hours total (image synthesis is the bottleneck).
 python train.py
 ```
 
-Saves the LoRA adapter and tokenizer to `./model/finetuned-blip2-flan-t5-xl/`.
+LoRA adapter와 tokenizer를 `./model/finetuned-blip2-flan-t5-xl/`에 저장한다.
 
-Expected runtime: ~20 minutes for 5 epochs on 1,218 examples.
+예상 소요 시간: 1,218개 예제, 5 epoch 기준 ~20분.
 
 ## 3. Run inference
 
@@ -32,17 +32,17 @@ Expected runtime: ~20 minutes for 5 epochs on 1,218 examples.
 python inference.py
 ```
 
-Reads `./data/given/test.csv`, runs two-stage prediction on each row, and writes the submission to `./test_inference_final.csv`.
+`./data/given/test.csv`를 읽어 각 행에 대해 two-stage prediction을 수행하고, 결과를 `./test_inference_final.csv`에 저장한다.
 
 ## Required file layout
 
-Before running inference, place the competition data in `data/given/`:
+Inference 실행 전, competition data를 `data/given/`에 배치한다:
 
 ```
 data/given/
 ├── test.csv
 ├── sample_submission.csv
-└── <images referenced by test.csv>
+└── <test.csv에서 참조하는 이미지들>
 ```
 
-The `test.csv` must have columns: `img_path`, `Question`, `A`, `B`, `C`, `D`.
+`test.csv`에는 다음 column이 있어야 한다: `img_path`, `Question`, `A`, `B`, `C`, `D`.

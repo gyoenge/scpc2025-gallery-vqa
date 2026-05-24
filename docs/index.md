@@ -1,9 +1,9 @@
 # SCPC2025 Gallery VQA
 
-Multimodal Visual Question Answering on smartphone gallery photos.  
-Built for the [DACON 2025 Samsung Collegiate Programming Challenge](https://dacon.io/competitions/official/236500/leaderboard).
+스마트폰 갤러리 사진을 대상으로 한 멀티모달 Visual Question Answering 시스템.  
+[DACON 2025 삼성 대학생 프로그래밍 챌린지](https://dacon.io/competitions/official/236500/leaderboard)를 위해 제작됐다.
 
-**Final result: 4th — private score 0.8344**
+**최종 결과: 4위 — Private Score 0.8344**
 
 ```{image} scpcrank.png
 :alt: leaderboard
@@ -15,13 +15,13 @@ Built for the [DACON 2025 Samsung Collegiate Programming Challenge](https://daco
 
 ## What this project does
 
-Given a smartphone photo and a multiple-choice question, the system selects the correct answer (A / B / C / D).
+스마트폰 사진과 객관식 질문이 주어지면 정답(A / B / C / D)을 선택한다.
 
-The pipeline has three parts:
+Pipeline은 세 단계로 구성된다:
 
-1. **Synthetic dataset generation** — 1,218 labeled VQA examples generated entirely by AI models
-2. **Fine-tuning** — BLIP2-FLAN-T5-XL with LoRA adapters, trained with 8-bit quantization
-3. **Two-stage inference** — first describe the image, then select the answer letter
+1. **Synthetic dataset generation** — AI 모델이 완전 자동으로 생성한 1,218개의 레이블된 VQA 예제
+2. **Fine-tuning** — LoRA adapter를 적용한 BLIP2-FLAN-T5-XL, 8-bit quantization으로 학습
+3. **Two-stage inference** — 이미지를 먼저 설명한 뒤 정답 문자를 선택
 
 ---
 
