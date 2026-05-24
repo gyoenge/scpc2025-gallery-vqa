@@ -1,2 +1,5 @@
-# claude 
-.claude 
+# claude
+.claude
+
+# Sphinx build output
+docs/_build/
