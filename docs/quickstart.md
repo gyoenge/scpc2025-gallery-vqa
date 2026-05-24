@@ -14,7 +14,6 @@ python generate_dataset.py
 - **Step 2** — 이미지 렌더링 → `data/generated/images/scene_*.jpg`
 - **Step 3** — VQA pair annotation → `data/generated/question_answer.csv`
 
-A100 기준 예상 소요 시간: 총 ~3시간 (image synthesis가 bottleneck).
 
 ## 2. Fine-tune
 
@@ -24,7 +23,6 @@ python train.py
 
 LoRA adapter와 tokenizer를 `./model/finetuned-blip2-flan-t5-xl/`에 저장한다.
 
-예상 소요 시간: 1,218개 예제, 5 epoch 기준 ~20분.
 
 ## 3. Run inference
 
