@@ -42,6 +42,7 @@ quickstart
 dataset
 training
 inference
+ablation
 ```
 
 ```{toctree}

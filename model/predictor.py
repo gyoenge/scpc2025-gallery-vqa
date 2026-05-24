@@ -43,6 +43,22 @@ class Predictor:
         decoded = self.processor.tokenizer.decode(output[0], skip_special_tokens=True).strip()
         return extract_answer_letter(decoded)
 
+    def predict_single_stage(self, image: Image.Image, row) -> str:
+        prompt = (
+            "USER: Based on the image and question, "
+            "choose the best option from A, B, C, or D.\n"
+            f"Question: {row['Question']}\n"
+            f"A. {row['A']}\n"
+            f"B. {row['B']}\n"
+            f"C. {row['C']}\n"
+            f"D. {row['D']}\n\n"
+            "Answer:"
+        )
+        inputs = self._encode(image, prompt)
+        output = self.model.generate(**inputs, max_new_tokens=3, do_sample=False)
+        decoded = self.processor.tokenizer.decode(output[0], skip_special_tokens=True).strip()
+        return extract_answer_letter(decoded)
+
     def _encode(self, image: Image.Image, text: str) -> dict:
         inputs = self.processor(images=image, text=text, return_tensors="pt")
         return {

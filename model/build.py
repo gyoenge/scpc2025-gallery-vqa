@@ -33,6 +33,33 @@ def load_blip2_for_training(cfg: Config):
     return model, processor
 
 
+def load_blip2_base(cfg: Config):
+    """Load BLIP2 with 4-bit quantized T5 decoder, without any LoRA adapter."""
+    quantization_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.float16,
+    )
+
+    processor = Blip2Processor.from_pretrained(cfg.base_model_id, use_fast=True)
+
+    t5 = T5ForConditionalGeneration.from_pretrained(
+        cfg.t5_model_id,
+        device_map="auto",
+        quantization_config=quantization_config,
+    )
+
+    model = Blip2ForConditionalGeneration.from_pretrained(
+        cfg.base_model_id,
+        torch_dtype=torch.float16,
+        device_map="auto",
+    )
+    model.language_model = t5
+
+    return model, processor
+
+
 def load_blip2_for_inference(cfg: Config):
     """Load BLIP2 with 4-bit quantized T5 decoder and LoRA adapter."""
     quantization_config = BitsAndBytesConfig(
