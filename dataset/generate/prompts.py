@@ -34,9 +34,12 @@ def generate_prompts(cfg: Config) -> None:
             try:
                 category = random.choice(cfg.categories)
                 prompt = _build_prompt(category)
-                result = generator(
-                    prompt, max_new_tokens=2000, do_sample=True, temperature=0.9
-                )[0]["generated_text"]
+                output = generator(
+                    prompt, max_new_tokens=512, do_sample=True, temperature=0.9
+                )
+                result = output[0].get("generated_text") if output else None
+                if not result:
+                    continue
                 result = result[len(prompt):]
                 scenes = re.findall(r'\d+\.\s+(.*)', result)[:10]
                 for scene in scenes:
