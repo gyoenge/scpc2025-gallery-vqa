@@ -1,5 +1,25 @@
 # Ablation Study
 
+## Building the eval dataset
+
+Ablation에 사용할 labeled eval set을 먼저 구축한다.
+
+```bash
+python generate_eval_dataset.py
+```
+
+두 단계로 실행된다. 각 단계는 output이 이미 존재하면 건너뛴다:
+
+- **Step 1** — Flickr30k test split 이미지 다운로드 → `data/eval/images/`
+- **Step 2** — LLaVA로 QA annotation → `data/eval/eval_question_answer.csv`
+
+Flickr30k는 training data(COCO val2017, synthetic)와 출처가 완전히 다른 real 이미지 dataset이다.  
+HuggingFace에서 다운로드되며, 필요 시 `HF_TOKEN`을 환경변수로 설정한다.
+
+이미지 수는 `configs/config.py`의 `num_eval_images`(default 500)로 조정한다.
+
+---
+
 ## Run
 
 ```bash

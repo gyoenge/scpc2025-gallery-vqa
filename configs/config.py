@@ -39,6 +39,10 @@ class Config:
         default_factory=lambda: ["query", "key", "value", "dense"]
     )
 
+    # Eval dataset
+    eval_dir: Path = field(default_factory=lambda: Path("./data/eval"))
+    num_eval_images: int = 500
+
     # Training
     batch_size: int = 8
     gradient_accumulation_steps: int = 4

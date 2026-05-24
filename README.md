@@ -54,7 +54,9 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 │   ├── generate/
 │   │   ├── prompts.py       # Step 1: scene prompt generation (Qwen)
 │   │   ├── images.py        # Step 2: image synthesis (Stable Diffusion)
-│   │   └── qa_pairs.py      # Step 3: VQA annotation (LLaVA)
+│   │   ├── qa_pairs.py      # Step 3: VQA annotation (LLaVA)
+│   │   ├── real_qa.py       # COCO val2017 download + annotation
+│   │   └── eval_images.py   # Flickr30k download for eval
 │   └── loader.py            # Dataset preprocessing for training
 ├── model/
 │   ├── build.py             # Model loading (training / inference variants)
@@ -63,6 +65,7 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 ├── utils/
 │   └── postprocess.py       # Answer extraction, submission builder
 ├── generate_dataset.py      # Entry point: run full generation pipeline
+├── generate_eval_dataset.py # Entry point: build external eval set (Flickr30k + LLaVA)
 ├── train.py                 # Entry point: fine-tune the model
 ├── inference.py             # Entry point: run inference, save submission
 ├── ablation.py              # Entry point: compare variants on a labeled eval set
@@ -128,11 +131,21 @@ python inference.py
 
 Reads `./data/given/test.csv`, runs two-stage prediction, and writes `test_inference_final.csv`.
 
-### 4. Ablation
+### 4. Build the eval dataset
 
 ```bash
-python ablation.py --eval_csv <labeled_eval.csv>
-python ablation.py --eval_csv <labeled_eval.csv> --output results.csv
+python generate_eval_dataset.py
+```
+
+Downloads Flickr30k images (a different source from the COCO training data) and annotates them with LLaVA. Outputs a labeled CSV at `data/eval/eval_question_answer.csv`. Each step is skipped if its output already exists.
+
+Image count is controlled by `num_eval_images` in `configs/config.py` (default 500).
+
+### 5. Ablation
+
+```bash
+python ablation.py --eval_csv data/eval/eval_question_answer.csv
+python ablation.py --eval_csv data/eval/eval_question_answer.csv --output results.csv
 ```
 
 Compares named variants on a labeled eval set. The eval CSV must include an `answer` column with ground-truth labels.
