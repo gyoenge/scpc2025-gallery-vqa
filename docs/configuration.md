@@ -26,8 +26,9 @@ cfg.num_epochs = 10   # override a field
 
 | Field | Default | Description |
 |-------|---------|-------------|
-| `generated_dir` | `./dataset/generated` | Output directory for generated data |
-| `given_dir` | `./dataset/given` | Directory containing competition test data |
+| `generated_dir` | `./data/generated` | Output directory for synthetic generated data |
+| `given_dir` | `./data/given` | Directory containing competition test data |
+| `real_dir` | `./data/real` | Root directory for real image data (COCO) |
 | `output_model_dir` | `./model/finetuned-blip2-flan-t5-xl` | Where `trainer.save_model()` writes |
 | `submission_save_path` | `./test_inference_final.csv` | Final submission file |
 
@@ -37,6 +38,8 @@ cfg.num_epochs = 10   # override a field
 |-------|---------|-------------|
 | `num_prompt_generations` | 300 | Number of Qwen calls (≈5 scenes each → ~1,500 prompts) |
 | `categories` | 4 strings | Scene categories sampled randomly per Qwen call |
+| `use_real_data` | `False` | Mix COCO val2017 real images into training data |
+| `num_real_images` | 500 | Number of COCO images to download when `use_real_data=True` |
 
 ## LoRA
 

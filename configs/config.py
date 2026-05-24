@@ -13,13 +13,16 @@ class Config:
     trained_model_id: str = "./model/finetuned-blip2-flan-t5-xl"
 
     # Paths
-    generated_dir: Path = field(default_factory=lambda: Path("./dataset/generated"))
-    given_dir: Path = field(default_factory=lambda: Path("./dataset/given"))
+    generated_dir: Path = field(default_factory=lambda: Path("./data/generated"))
+    given_dir: Path = field(default_factory=lambda: Path("./data/given"))
+    real_dir: Path = field(default_factory=lambda: Path("./data/real"))
     output_model_dir: Path = field(default_factory=lambda: Path("./model/finetuned-blip2-flan-t5-xl"))
     submission_save_path: str = "./test_inference_final.csv"
 
     # Dataset generation
-    num_prompt_generations: int = 300
+    num_prompt_generations: int = 1000
+    use_real_data: bool = True
+    num_real_images: int = 3000
     categories: list = field(default_factory=lambda: [
         "- Nature (e.g. landscape, animal, weather, plants)\n",
         "- Travel (e.g. tourist spots, local streets, vehicles, airports)\n",

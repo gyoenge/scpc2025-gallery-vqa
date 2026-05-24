@@ -21,6 +21,13 @@ python generate_dataset.py
 
 Each step checks for its output file and skips if already present, so the pipeline is safe to resume after interruption.
 
+To mix in real COCO images, enable `use_real_data` in `configs/config.py` before running:
+
+```python
+use_real_data: bool = True   # enables Step 4
+num_real_images: int = 500   # how many COCO val2017 images to download
+```
+
 ---
 
 ## Step 1 — Scene prompt generation (`dataset/generate/prompts.py`)
@@ -39,7 +46,7 @@ Categories sampled randomly each iteration:
 | Casual | daily life, family, sports, school |
 | Food | meals, cafes, snacks, drinks |
 
-**Output**: `dataset/generated/scene_prompt.csv`
+**Output**: `data/generated/scene_prompt.csv`
 
 | Column | Description |
 |--------|-------------|
@@ -59,7 +66,7 @@ A photorealistic, candid moment of '{scene}', taken with a smartphone camera.
 Realistic lighting, natural colors, soft focus, high detail.
 ```
 
-**Output**: `dataset/generated/images/scene_<id>.jpg`
+**Output**: `data/generated/images/scene_<id>.jpg`
 
 ---
 
@@ -75,7 +82,7 @@ Each generated image is passed to LLaVA with a structured prompt that instructs 
 
 Responses that fail parsing are silently skipped.
 
-**Output**: `dataset/generated/question_answer.csv`
+**Output**: `data/generated/question_answer.csv`
 
 | Column | Description |
 |--------|-------------|
@@ -85,6 +92,28 @@ Responses that fail parsing are silently skipped.
 | `Question` | The multiple-choice question |
 | `A` / `B` / `C` / `D` | Answer choices |
 | `answer` | Correct answer letter (`A`–`D`) |
+
+---
+
+---
+
+## Step 4 (optional) — Real image augmentation (`dataset/generate/real_qa.py`)
+
+**Source**: COCO val2017 (5,000 real smartphone-style photos)
+
+Set `use_real_data = True` in `configs/config.py`. The pipeline:
+
+1. Downloads `annotations_trainval2017.zip` once (~240 MB) to retrieve image IDs, then caches them as `data/real/coco_val_ids.json`
+2. Downloads `num_real_images` individual JPEGs from `http://images.cocodataset.org/val2017/`
+3. Runs the same LLaVA annotation step → `data/real/real_question_answer.csv`
+
+`dataset/loader.py` automatically concatenates `question_answer.csv` (synthetic) and `real_question_answer.csv` (real) when `use_real_data = True`.
+
+| Output | Description |
+|--------|-------------|
+| `data/real/images/` | Downloaded COCO val2017 JPEGs |
+| `data/real/coco_val_ids.json` | Cached image ID list (no re-download needed) |
+| `data/real/real_question_answer.csv` | VQA annotations for real images |
 
 ---
 
@@ -102,4 +131,4 @@ Responses that fail parsing are silently skipped.
 
 ## Using a custom dataset
 
-To substitute your own labeled data, place a CSV at `dataset/generated/question_answer.csv` with the columns listed above and set `img_path` to absolute or relative paths that `PIL.Image.open` can resolve.
+To substitute your own labeled data, place a CSV at `data/generated/question_answer.csv` with the columns listed above and set `img_path` to absolute or relative paths that `PIL.Image.open` can resolve.

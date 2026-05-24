@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import pandas as pd
 import torch
@@ -27,14 +28,30 @@ _PROMPT = (
 
 
 def generate_qa_pairs(cfg: Config) -> None:
+    model, processor = _load_llava(cfg)
+    _annotate_images(
+        model, processor,
+        image_dir=cfg.generated_dir / "images",
+        output_path=cfg.generated_dir / "question_answer.csv",
+        id_prefix="TRAIN",
+    )
+
+
+def _load_llava(cfg: Config):
     processor = AutoProcessor.from_pretrained(cfg.qa_model_id)
     model = LlavaForConditionalGeneration.from_pretrained(
         cfg.qa_model_id, torch_dtype=torch.float16, device_map="auto"
     )
+    return model, processor
 
-    image_dir = cfg.generated_dir / "images"
-    output_path = cfg.generated_dir / "question_answer.csv"
 
+def _annotate_images(
+    model,
+    processor,
+    image_dir: Path,
+    output_path: Path,
+    id_prefix: str,
+) -> None:
     image_files = sorted(
         f for f in os.listdir(image_dir) if f.lower().endswith((".jpg", ".png"))
     )
@@ -66,7 +83,7 @@ def generate_qa_pairs(cfg: Config) -> None:
             continue
 
         results.append({
-            "ID": f"TRAIN_{idx:03d}",
+            "ID": f"{id_prefix}_{idx:03d}",
             "img_path": str(image_path),
             "Description": desc,
             "Question": question,

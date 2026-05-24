@@ -125,7 +125,7 @@ Saves the LoRA adapter and tokenizer to `./model/finetuned-blip2-flan-t5-xl/`.
 python inference.py
 ```
 
-Reads `./dataset/given/test.csv`, runs two-stage prediction, and writes `test_inference_final.csv`.
+Reads `./data/given/test.csv`, runs two-stage prediction, and writes `test_inference_final.csv`.
 
 ---
 

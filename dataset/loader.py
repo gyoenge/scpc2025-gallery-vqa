@@ -10,6 +10,12 @@ from configs.config import Config
 def build_dataset(cfg: Config, processor: Blip2Processor) -> Dataset:
     qa_csv = cfg.generated_dir / "question_answer.csv"
     df = pd.read_csv(qa_csv)
+
+    real_csv = cfg.real_dir / "real_question_answer.csv"
+    if cfg.use_real_data and real_csv.exists():
+        df_real = pd.read_csv(real_csv)
+        df = pd.concat([df, df_real], ignore_index=True)
+        print(f"Dataset: {len(df)} total ({len(df_real)} real + {len(df) - len(df_real)} synthetic)")
     df["prompt"] = df.apply(_build_prompt, axis=1)
     df["target"] = df.apply(_build_target, axis=1)
 

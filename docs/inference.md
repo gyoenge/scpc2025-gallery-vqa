@@ -6,7 +6,7 @@
 python inference.py
 ```
 
-Reads `dataset/given/test.csv`, predicts an answer letter for each row, and writes `test_inference_final.csv`.
+Reads `data/given/test.csv`, predicts an answer letter for each row, and writes `test_inference_final.csv`.
 
 ## Two-stage prediction (`model/predictor.py`)
 
