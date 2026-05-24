@@ -65,6 +65,7 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 ├── generate_dataset.py      # Entry point: run full generation pipeline
 ├── train.py                 # Entry point: fine-tune the model
 ├── inference.py             # Entry point: run inference, save submission
+├── ablation.py              # Entry point: compare variants on a labeled eval set
 ├── pyproject.toml
 └── requirements.txt
 ```
@@ -126,6 +127,18 @@ python inference.py
 ```
 
 Reads `./data/given/test.csv`, runs two-stage prediction, and writes `test_inference_final.csv`.
+
+### 4. Ablation
+
+```bash
+python ablation.py --eval_csv <labeled_eval.csv>
+python ablation.py --eval_csv <labeled_eval.csv> --output results.csv
+```
+
+Compares named variants on a labeled eval set. The eval CSV must include an `answer` column with ground-truth labels.
+
+Default variants: two-stage vs. single-stage inference, fine-tuned vs. base model.  
+Additional variants (dataset composition, LoRA rank) can be enabled by editing the `VARIANTS` list in `ablation.py`.
 
 ---
 
