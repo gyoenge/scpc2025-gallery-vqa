@@ -34,6 +34,25 @@ python inference.py
 
 `./data/given/test.csv`를 읽어 각 행에 대해 two-stage prediction을 수행하고, 결과를 `./test_inference_final.csv`에 저장한다.
 
+## 4. Build the eval dataset
+
+```bash
+python generate_eval_dataset.py
+```
+
+Flickr30k 이미지를 다운로드하고 LLaVA로 QA annotation을 생성한다.  
+Output: `data/eval/eval_question_answer.csv`
+
+## 5. Run ablation
+
+```bash
+python ablation.py --eval_csv data/eval/eval_question_answer.csv
+python ablation.py --eval_csv data/eval/eval_question_answer.csv --output results.csv
+```
+
+Inference strategy, fine-tuning, model checkpoint 등 여러 variant를 비교한다.  
+자세한 내용은 [Ablation Study](ablation.md)를 참고한다.
+
 ## Required file layout
 
 Inference 실행 전, competition data를 `data/given/`에 배치한다:

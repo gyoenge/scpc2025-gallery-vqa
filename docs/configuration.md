@@ -42,6 +42,13 @@ cfg.num_epochs = 10   # field override
 | `num_real_images` | 3000 | `use_real_data=True`일 때 다운로드할 COCO 이미지 수 |
 | `balance_answer_dist` | `False` | Training 전 A/B/C/D 개수를 undersampling으로 균등화 |
 
+## Eval dataset
+
+| Field | Default | 설명 |
+|-------|---------|------|
+| `eval_dir` | `./data/eval` | Eval 이미지 및 annotation 저장 directory |
+| `num_eval_images` | 500 | 다운로드할 Flickr30k 이미지 수 |
+
 ## LoRA
 
 | Field | Default | 설명 |

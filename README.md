@@ -169,3 +169,5 @@ Key fields:
 | `batch_size` | 8 | Per-device batch size |
 | `input_max_length` | 384 | Tokenizer input truncation |
 | `num_prompt_generations` | 1000 | Scene prompt generation iterations |
+| `eval_dir` | `./data/eval` | Eval dataset directory |
+| `num_eval_images` | 500 | Number of Flickr30k images to download for eval |
