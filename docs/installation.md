@@ -5,7 +5,7 @@
 | 항목 | 버전 |
 |------|------|
 | OS | Linux (Ubuntu 22.04 테스트) |
-| GPU | NVIDIA A100 SXM4 40 GB (최소 ~20 GB 권장) |
+| GPU | NVIDIA GPU (최소 ~20 GB VRAM 권장) |
 | CUDA | 12.8 |
 | Python | 3.10+ |
 
