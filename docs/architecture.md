@@ -89,4 +89,10 @@ The output is parsed by `re.search(r"\b([A-D])\b", text)`.
 | FLAN-T5 without two-stage | 0.81298 |
 | **BLIP2 + LoRA + two-stage** | **0.83262** |
 
-Private leaderboard: **0.8344**, rank 18 / 1,445.
+Private leaderboard: **0.8344**, rank **4th**.
+
+```{image} scpcrank.png
+:alt: leaderboard
+:width: 70%
+:align: center
+```

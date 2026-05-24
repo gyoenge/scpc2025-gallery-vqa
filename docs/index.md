@@ -3,7 +3,13 @@
 Multimodal Visual Question Answering on smartphone gallery photos.  
 Built for the [DACON 2025 Samsung Collegiate Programming Challenge](https://dacon.io/competitions/official/236500/leaderboard).
 
-**Final result: 18th / 1,445 — private score 0.8344**
+**Final result: 4th — private score 0.8344**
+
+```{image} scpcrank.png
+:alt: leaderboard
+:width: 70%
+:align: center
+```
 
 ---
 
