@@ -36,7 +36,7 @@ cfg.num_epochs = 10   # field override
 
 | Field | Default | 설명 |
 |-------|---------|------|
-| `num_prompt_generations` | 300 | Qwen 호출 횟수 (호출당 ~5개 scene → ~1,500개 prompt) |
+| `num_prompt_generations` | 1000 | Qwen 호출 횟수 (호출당 ~5개 scene → ~5,000개 prompt) |
 | `categories` | 4개 문자열 | Qwen 호출마다 무작위로 샘플링되는 scene category |
 | `use_real_data` | `True` | COCO val2017 실제 이미지를 training data에 혼합 |
 | `num_real_images` | 3000 | `use_real_data=True`일 때 다운로드할 COCO 이미지 수 |

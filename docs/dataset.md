@@ -35,7 +35,7 @@ num_real_images: int = 500   # 다운로드할 COCO val2017 이미지 수
 **Model**: HuggingFace `pipeline("text-generation")`을 통한 `Qwen/Qwen-1_8B`
 
 호출당 5개의 스마트폰 사진 scene description을 생성하도록 prompt된다.  
-`Config.num_prompt_generations` (default 300) 호출 × 유효 scene ~4개 ≈ 1,200개 이상의 scene prompt.
+`Config.num_prompt_generations` (default 1000) 호출 × 유효 scene ~4개 ≈ 4,000개 이상의 scene prompt.
 
 매 iteration마다 무작위로 샘플링되는 category:
 

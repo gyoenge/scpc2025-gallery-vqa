@@ -21,7 +21,7 @@
 
 The system has three phases:
 
-**1. Synthetic dataset generation** — a three-step pipeline produces 1,218 training examples:
+**1. Synthetic dataset generation** — a three-step pipeline produces labeled VQA examples:
 - `Qwen/Qwen-1_8B` generates scene prompts across categories (nature, travel, food, casual)
 - `dreamlike-art/dreamlike-photoreal-2.0` renders each prompt into a realistic photo
 - `llava-hf/llava-1.5-7b-hf` annotates each image with a description, a multiple-choice question, and the correct answer
@@ -76,7 +76,7 @@ Legacy prototype notebooks and scripts are preserved in `.legacy/`.
 ## Environment
 
 - OS: Linux
-- GPU: 1× NVIDIA A100 SXM4 (40 GB VRAM)
+- GPU: NVIDIA GPU (~20 GB VRAM minimum)
 - CUDA: 12.8
 - Python: 3.10+
 
@@ -142,4 +142,4 @@ Key fields:
 | `num_epochs` | 5 | Training epochs |
 | `batch_size` | 8 | Per-device batch size |
 | `input_max_length` | 384 | Tokenizer input truncation |
-| `num_prompt_generations` | 300 | Scene prompt generation iterations |
+| `num_prompt_generations` | 1000 | Scene prompt generation iterations |
