@@ -5,7 +5,7 @@
 - **Event**: 2025 Samsung Collegiate Programming Challenge: AI (Jun–Jul 2025)
 - **Task**: Select the correct answer to multiple-choice questions about everyday gallery photos
 - **Approach**: BLIP2-FLAN-T5-XL fine-tuned with LoRA + partial 4-bit quantization on a synthetically generated dataset
-- **Result**: **18th / 1,445** on private leaderboard — score 0.8344 ([Leaderboard](https://dacon.io/competitions/official/236500/leaderboard))
+- **Result**: **4th** on private leaderboard — score 0.8344 ([Leaderboard](https://dacon.io/competitions/official/236500/leaderboard))
 
 <p align="center">
 <img width="70%" alt="leaderboard" src="scpcrank.png" />
