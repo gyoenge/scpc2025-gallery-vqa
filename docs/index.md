@@ -19,7 +19,7 @@
 
 Pipeline은 세 단계로 구성된다:
 
-1. **Synthetic dataset generation** — AI 모델이 완전 자동으로 생성한 1,218개의 레이블된 VQA 예제
+1. **Synthetic dataset generation** — AI 모델이 완전 자동으로 생성한 레이블된 VQA 예제
 2. **Fine-tuning** — LoRA adapter를 적용한 BLIP2-FLAN-T5-XL, 8-bit quantization으로 학습
 3. **Two-stage inference** — 이미지를 먼저 설명한 뒤 정답 문자를 선택
 
