@@ -64,11 +64,12 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 │   └── predictor.py         # Two-stage inference logic
 ├── utils/
 │   └── postprocess.py       # Answer extraction, submission builder
-├── generate_train_dataset.py # Entry point: run full generation pipeline
-├── generate_eval_dataset.py # Entry point: build external eval set (Flickr30k + LLaVA)
-├── train.py                 # Entry point: fine-tune the model
-├── inference.py             # Entry point: run inference, save submission
-├── ablation.py              # Entry point: compare variants on a labeled eval set
+├── generate_train_dataset.py    # Entry point: run full training data generation pipeline
+├── generate_eval_dataset.py     # Entry point: build external eval set (Flickr30k + LLaVA)
+├── train.py                     # Entry point: fine-tune the model
+├── train_dataset_composition.py # Entry point: train synthetic_only / synthetic_real for ablation
+├── inference.py                 # Entry point: run inference, save submission
+├── ablation.py                  # Entry point: compare variants on a labeled eval set
 ├── pyproject.toml
 └── requirements.txt
 ```
@@ -141,7 +142,19 @@ Downloads Flickr30k images (a different source from the COCO training data) and 
 
 Image count is controlled by `num_eval_images` in `configs/config.py` (default 500).
 
-### 5. Ablation
+### 5. Train dataset composition variants
+
+```bash
+python train_dataset_composition.py                      # trains both sequentially
+python train_dataset_composition.py --composition synthetic_only
+python train_dataset_composition.py --composition synthetic_real
+```
+
+Trains two checkpoints under `./model/` for the dataset composition ablation:
+- `synthetic_only` — AI-generated images + LLaVA QA pairs only
+- `synthetic_real` — synthetic + COCO val2017 real images
+
+### 6. Ablation
 
 ```bash
 python ablation.py --eval_csv data/eval/eval_question_answer.csv
@@ -150,8 +163,8 @@ python ablation.py --eval_csv data/eval/eval_question_answer.csv --output result
 
 Compares named variants on a labeled eval set. The eval CSV must include an `answer` column with ground-truth labels.
 
-Default variants: two-stage vs. single-stage inference, fine-tuned vs. base model.  
-Additional variants (dataset composition, LoRA rank) can be enabled by editing the `VARIANTS` list in `ablation.py`.
+Default variants: two-stage vs. single-stage inference, fine-tuned vs. base model, dataset composition.  
+LoRA rank variants can be enabled by editing the `VARIANTS` list in `ablation.py`.
 
 ---
 
