@@ -67,7 +67,7 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 ├── generate_train_dataset.py    # Entry point: run full training data generation pipeline
 ├── generate_eval_dataset.py     # Entry point: build external eval set (Flickr30k + LLaVA)
 ├── train.py                     # Entry point: fine-tune the model
-├── train_dataset_composition.py # Entry point: train synthetic_only / synthetic_real for ablation
+├── train_dataset_ablation.py    # Entry point: train synthetic_only / synthetic_real for ablation
 ├── inference.py                 # Entry point: run inference, save submission
 ├── inference_ablation.py        # Entry point: compare inference variants on a labeled eval set
 ├── pyproject.toml
@@ -145,9 +145,9 @@ Image count is controlled by `num_eval_images` in `configs/config.py` (default 5
 ### 5. Train dataset composition variants
 
 ```bash
-python train_dataset_composition.py                      # trains both sequentially
-python train_dataset_composition.py --composition synthetic_only
-python train_dataset_composition.py --composition synthetic_real
+python train_dataset_ablation.py                         # trains both sequentially
+python train_dataset_ablation.py --composition synthetic_only
+python train_dataset_ablation.py --composition synthetic_real
 ```
 
 Trains two checkpoints under `./model/` for the dataset composition ablation:

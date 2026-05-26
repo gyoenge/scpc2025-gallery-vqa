@@ -1,5 +1,5 @@
 """
-Dataset composition ablation: trains two checkpoints for direct comparison.
+Dataset ablation trainer: trains checkpoints for each dataset composition condition.
 
   synthetic_only  —  only AI-generated images + LLaVA QA pairs
   synthetic_real  —  synthetic + COCO val2017 real images
@@ -9,9 +9,9 @@ Checkpoints are saved under:
   ./model/finetuned-synthetic-real
 
 Usage:
-    python train_composition_ablation.py                     # trains both
-    python train_composition_ablation.py --composition synthetic_only
-    python train_composition_ablation.py --composition synthetic_real
+    python train_dataset_ablation.py                        # trains both sequentially
+    python train_dataset_ablation.py --composition synthetic_only
+    python train_dataset_ablation.py --composition synthetic_real
 """
 
 import argparse
