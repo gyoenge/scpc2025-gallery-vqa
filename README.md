@@ -64,7 +64,7 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 │   └── predictor.py         # Two-stage inference logic
 ├── utils/
 │   └── postprocess.py       # Answer extraction, submission builder
-├── generate_dataset.py      # Entry point: run full generation pipeline
+├── generate_train_dataset.py # Entry point: run full generation pipeline
 ├── generate_eval_dataset.py # Entry point: build external eval set (Flickr30k + LLaVA)
 ├── train.py                 # Entry point: fine-tune the model
 ├── inference.py             # Entry point: run inference, save submission
@@ -110,7 +110,7 @@ pip install -e ".[jupyter]"
 ### 1. Generate the training dataset
 
 ```bash
-python generate_dataset.py
+python generate_train_dataset.py
 ```
 
 Runs the three-step pipeline sequentially. Each step is skipped automatically if its output already exists.
