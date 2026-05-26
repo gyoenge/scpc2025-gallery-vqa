@@ -69,7 +69,7 @@ At inference the T5 decoder is swapped to a 4-bit quantized version for lower VR
 ├── train.py                     # Entry point: fine-tune the model
 ├── train_dataset_composition.py # Entry point: train synthetic_only / synthetic_real for ablation
 ├── inference.py                 # Entry point: run inference, save submission
-├── ablation.py                  # Entry point: compare variants on a labeled eval set
+├── inference_ablation.py        # Entry point: compare inference variants on a labeled eval set
 ├── pyproject.toml
 └── requirements.txt
 ```
@@ -157,14 +157,14 @@ Trains two checkpoints under `./model/` for the dataset composition ablation:
 ### 6. Ablation
 
 ```bash
-python ablation.py --eval_csv data/eval/eval_question_answer.csv
-python ablation.py --eval_csv data/eval/eval_question_answer.csv --output results.csv
+python inference_ablation.py --eval_csv data/eval/eval_question_answer.csv
+python inference_ablation.py --eval_csv data/eval/eval_question_answer.csv --output results.csv
 ```
 
 Compares named variants on a labeled eval set. The eval CSV must include an `answer` column with ground-truth labels.
 
 Default variants: two-stage vs. single-stage inference, fine-tuned vs. base model, dataset composition.  
-LoRA rank variants can be enabled by editing the `VARIANTS` list in `ablation.py`.
+LoRA rank variants can be enabled by editing the `VARIANTS` list in `inference_ablation.py`.
 
 ---
 
