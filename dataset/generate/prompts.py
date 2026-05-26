@@ -1,11 +1,10 @@
 import csv
 import re
-import time
 import random
 import warnings
 
 import torch
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
 
 from configs.config import Config
@@ -13,14 +12,22 @@ from configs.config import Config
 
 def generate_prompts(cfg: Config) -> None:
     warnings.filterwarnings("ignore", category=FutureWarning)
-    device = 0 if torch.cuda.is_available() else -1
-    generator = pipeline(
-        "text-generation",
-        model=cfg.prompt_model_id,
-        trust_remote_code=True,
-        device=device,
+
+    tokenizer = AutoTokenizer.from_pretrained(
+        cfg.prompt_model_id, trust_remote_code=True
     )
-    print(f"Prompt model loaded on {'GPU' if device == 0 else 'CPU'}.")
+    model = AutoModelForCausalLM.from_pretrained(
+        cfg.prompt_model_id,
+        trust_remote_code=True,
+        torch_dtype=torch.float16,
+        device_map="auto",
+    )
+    model.eval()
+    device = next(model.parameters()).device
+    print(f"Prompt model loaded on {device}.")
+
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token_id = tokenizer.eos_token_id
 
     output_path = cfg.generated_dir / "scene_prompt.csv"
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -34,20 +41,27 @@ def generate_prompts(cfg: Config) -> None:
             try:
                 category = random.choice(cfg.categories)
                 prompt = _build_prompt(category)
-                output = generator(
-                    prompt, max_new_tokens=512, do_sample=True, temperature=0.9
-                )
-                result = output[0].get("generated_text") if output else None
-                if not result:
-                    continue
-                result = result[len(prompt):]
+                input_ids = tokenizer.encode(prompt, return_tensors="pt").to(device)
+                attention_mask = torch.ones_like(input_ids)
+                with torch.no_grad():
+                    output_ids = model.generate(
+                        input_ids,
+                        attention_mask=attention_mask,
+                        max_new_tokens=512,
+                        do_sample=True,
+                        temperature=0.9,
+                        pad_token_id=tokenizer.pad_token_id,
+                        use_cache=False,
+                    )
+                new_tokens = output_ids[0][input_ids.shape[1]:]
+                result = tokenizer.decode(new_tokens, skip_special_tokens=True)
                 scenes = re.findall(r'\d+\.\s+(.*)', result)[:10]
                 for scene in scenes:
                     writer.writerow([scene_id, scene.strip()])
                     scene_id += 1
-                time.sleep(0.5)
             except Exception as e:
                 print(f"Error at iteration {i}: {e}")
+                continue
 
     print(f"Saved {scene_id} scene prompts to {output_path}")
 
