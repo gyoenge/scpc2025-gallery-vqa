@@ -32,3 +32,6 @@ model/
 *.log
 runs/
 wandb/
+
+# note
+description.md

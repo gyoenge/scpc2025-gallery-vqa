@@ -20,7 +20,8 @@ def build_dataset(cfg: Config, processor: Blip2Processor) -> Dataset:
 
     df = validate_qa(df, balance=cfg.balance_answer_dist)
     df["prompt"] = df.apply(_build_prompt, axis=1)
-    df["target"] = df.apply(_build_target, axis=1)
+    target_fn = _build_target_answer_only if cfg.answer_only_loss else _build_target
+    df["target"] = df.apply(target_fn, axis=1)
 
     dataset = Dataset.from_pandas(df)
     vocab_size = processor.tokenizer.vocab_size
@@ -94,3 +95,7 @@ def _build_prompt(row) -> str:
 
 def _build_target(row) -> str:
     return f"Description: {row['Description']}\nAnswer: {row['answer']}"
+
+
+def _build_target_answer_only(row) -> str:
+    return f"Answer: {row['answer']}"

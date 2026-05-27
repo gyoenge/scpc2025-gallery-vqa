@@ -103,14 +103,27 @@ Competition test set과 Flickr30k 모두에서 유사한 정확도가 관측된�
 
 ### 현재 취약점
 
-**"소규모 데이터이기 때문에 오히려 일반화된다"는 역설**
+**취약점 1 — "소규모 데이터이기 때문에 오히려 일반화된다"는 역설**
 
 소규모 데이터 → 과적합 위험 → 일반화 불가? 라는 반론에 대해, LoRA의 구조적 제약이 이를 방지한다는 논리가 필요하다. 이를 실험으로 직접 보이려면:
 
 - **LoRA rank ablation** (r = 8 / 16 / 32 / 64): rank가 높아질수록 Flickr30k 성능이 오히려 떨어지는 패턴이 나오면, r = 32가 소규모 데이터 환경에서의 generalization sweet spot임을 입증할 수 있다.
 
+**취약점 2 — Description 생성이 지배적인 multi-task loss**
+
+현재 loss target은 `"Description: {desc}\nAnswer: {letter}"` 전체다.
+description은 약 20~50 token, answer는 1~2 token이므로, answer 예측 신호가 loss의 2~4%에 불과하다.
+Q-Former LoRA는 사실상 "LLaVA 스타일 description 생성"에 최적화되며, 실제 평가 지표인 answer 예측 신호는 희석된다.
+
+이 구조가 일반화에 도움이 되는지 방해가 되는지는 two-stage 추론의 성격과 연결된다:
+- description이 answer 예측의 질을 높이는 데 기여한다면, description 생성 학습은 유용한 regularizer다.
+- description 생성 학습이 answer 신호를 희석한다면, answer-only loss가 더 나은 일반화를 보인다.
+
+이 질문은 **loss target ablation**으로 직접 검증 가능하다 (`train_loss_ablation.py`).
+
 ### 보완 실험 우선순위
 
 1. **Dataset composition ablation** (`train_dataset_ablation.py`) — 이미 준비됨
-2. **LoRA rank ablation** — `train_dataset_ablation.py`와 동일한 구조로 확장 가능
-3. **Data scale ablation** (optional) — 100 / 500 / 1,200개 subset으로 학습하여 성능 곡선 확인
+2. **Loss target ablation** (`train_loss_ablation.py`) — 이미 준비됨
+3. **LoRA rank ablation** — `train_dataset_ablation.py`와 동일한 구조로 확장 가능
+4. **Data scale ablation** (optional) — 100 / 500 / 1,200개 subset으로 학습하여 성능 곡선 확인

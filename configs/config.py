@@ -44,6 +44,7 @@ class Config:
     num_eval_images: int = 500
 
     # Training
+    answer_only_loss: bool = False
     batch_size: int = 8
     gradient_accumulation_steps: int = 4
     num_epochs: int = 5

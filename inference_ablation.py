@@ -47,6 +47,9 @@ VARIANTS: list[AblationVariant] = [
     # Dataset composition
     AblationVariant("two_stage + synthetic_only", trained_model_id="./model/finetuned-synthetic-only"),
     AblationVariant("two_stage + synthetic_real",  trained_model_id="./model/finetuned-synthetic-real"),
+    # Loss target
+    AblationVariant("two_stage + full_loss",   trained_model_id="./model/finetuned-full-loss"),
+    AblationVariant("two_stage + answer_only", trained_model_id="./model/finetuned-answer-only"),
     # LoRA rank ablation — uncomment and set paths after training:
     # AblationVariant("two_stage + lora_r8",  trained_model_id="./model/finetuned-lora-r8"),
     # AblationVariant("two_stage + lora_r16", trained_model_id="./model/finetuned-lora-r16"),

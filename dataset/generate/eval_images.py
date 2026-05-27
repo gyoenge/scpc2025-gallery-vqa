@@ -21,7 +21,7 @@ def download_eval_images(cfg: Config) -> None:
     from datasets import load_dataset
 
     print("Loading Flickr30k (test split) from HuggingFace...")
-    ds = load_dataset("nlphuji/flickr30k", split="test", trust_remote_code=True)
+    ds = load_dataset("lmms-lab/flickr30k", split="test")
     n = min(cfg.num_eval_images, len(ds))
 
     print(f"Saving {n} images to {output_dir}...")
