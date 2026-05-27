@@ -19,6 +19,7 @@ def load_blip2_for_training(cfg: Config):
         device_map="auto",
     )
     model = prepare_model_for_kbit_training(model)
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
     lora_config = LoraConfig(
         r=cfg.lora_r,
@@ -29,6 +30,7 @@ def load_blip2_for_training(cfg: Config):
         task_type=TaskType.SEQ_2_SEQ_LM,
     )
     model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
 
     return model, processor
 
